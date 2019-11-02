@@ -30,7 +30,9 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Modifico el texto del toolbar
+        /**
+         * Modifico el texto del toolbar
+         */
         getSupportActionBar().setTitle("GarageApp");
 
         presenter = new ListadoPresenter(this);
