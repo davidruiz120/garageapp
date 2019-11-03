@@ -8,17 +8,30 @@
     tools:context=".views.FormularioActivity"
     tools:showIn="@layout/activity_formulario">
 
+    <ImageView
+        android:id="@+id/imputAddImagen"
+        android:layout_width="173dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="119dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imgexample01" />
+
     <EditText
         android:id="@+id/nombreEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="248dp"
         android:layout_marginEnd="182dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
