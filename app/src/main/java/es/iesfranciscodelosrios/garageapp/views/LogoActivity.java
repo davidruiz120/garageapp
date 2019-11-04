@@ -31,4 +31,40 @@ public class LogoActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d(TAG,"Ejecutando onStart en FormularioActivity...");
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.d(TAG,"Ejecutando onRestart en FormularioActivity...");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG,"Ejecutando onResume en FormularioActivity...");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d(TAG,"Ejecutando onPause en FormularioActivity...");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d(TAG,"Ejecutando onStop en FormularioActivity...");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG,"Ejecutando onDestroy en FormularioActivity...");
+    }
 }
