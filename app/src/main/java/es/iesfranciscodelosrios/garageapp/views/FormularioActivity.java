@@ -1,6 +1,7 @@
 package es.iesfranciscodelosrios.garageapp.views;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,10 +21,13 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import es.iesfranciscodelosrios.garageapp.R;
+import es.iesfranciscodelosrios.garageapp.interfaces.FormularioInterface;
+import es.iesfranciscodelosrios.garageapp.presenters.FormularioPresenter;
 
-public class FormularioActivity extends AppCompatActivity {
+public class FormularioActivity extends AppCompatActivity implements FormularioInterface.View{
 
     String TAG = "GarageApp/FormularioActivity";
+    private FormularioInterface.Presenter presenter;
     Spinner selectAddCombustible;
     TextView imputAddFechaMatriculacion;
     Calendar fechaActual;
@@ -70,12 +75,13 @@ public class FormularioActivity extends AppCompatActivity {
         imputAddFechaMatriculacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d(TAG, "Accediendo al calendario...");
                 DatePickerDialog datePickerDialog = new DatePickerDialog(FormularioActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month+1; // Se le suma +1 porque aparece el mes anterior
                         imputAddFechaMatriculacion.setText(dayOfMonth+"/"+month+"/"+year);
+                        Log.d(TAG, "Fecha seleccionada...");
                     }
                 }, anyo, mes, dia);
                 datePickerDialog.show();
@@ -83,9 +89,29 @@ public class FormularioActivity extends AppCompatActivity {
         });
 
 
+        /**
+         *
+         */
+        presenter = new FormularioPresenter(this);
+
+        Button imputBtnGuardar = findViewById(R.id.imputBtnGuardar);
+        imputBtnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Pulsando boton Guardar...");
+                presenter.onClickGuardar();
+            }
+        });
+
     }
 
 
+    public void lanzarListado(){
+        Log.d(TAG, "Lanzando listado...");
+        Intent intent = new Intent(FormularioActivity.this, ListadoActivity.class); //Comunicamos las 2 actividades
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onStart(){

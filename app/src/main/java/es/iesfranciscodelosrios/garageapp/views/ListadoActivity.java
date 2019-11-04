@@ -55,6 +55,12 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     }
 
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Log.d(TAG,"Ejecutando onBlackPressed en ListadoActivity...");
+        return;
+    }
 
     @Override
     protected void onStart(){
