@@ -41,10 +41,6 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         setSupportActionBar(toolbar);
 
         /**
-         * Modifico el texto del toolbar
-         */
-        getSupportActionBar().setTitle("Añadir vehículo");
-        /**
          * Agrego el Up Button, la funcionalidad del mismo se establece en AndroidManifest.xml
          * agregando parent android:parentActivityName=".views.ListadoActivity" en el
          * activity FormularioActivity

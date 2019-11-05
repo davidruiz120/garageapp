@@ -32,10 +32,6 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /**
-         * Modifico el texto del toolbar
-         */
-        getSupportActionBar().setTitle("GarageApp");
 
         presenter = new ListadoPresenter(this);
 
@@ -57,7 +53,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     }
 
 
-    @Override
+    @Override // Se añade el menú personalizado
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_listado, menu);

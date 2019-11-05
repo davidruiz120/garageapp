@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">GarageApp</string>
     <string name="action_settings">Configuración</string>
-    <string name="title_activity_listado">ListadoActivity</string>
-    <string name="title_activity_formulario">FormularioActivity</string>
+    <string name="title_activity_listado" translatable="false">GarageApp</string>
+    <string name="title_activity_formulario">Añadir vehículo</string>
     <string name="_0_resultados_encontrados">0 resultados encontrados</string>
     <string name="acerca_de">Acerca de</string>
 </resources>
