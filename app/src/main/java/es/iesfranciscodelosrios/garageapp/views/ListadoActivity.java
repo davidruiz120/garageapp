@@ -13,6 +13,8 @@ import android.util.Log;
 import es.iesfranciscodelosrios.garageapp.interfaces.ListadoInterface;
 import es.iesfranciscodelosrios.garageapp.presenters.ListadoPresenter;
 
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,6 +56,13 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         startActivity(intent);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_listado, menu);
+        return true;
+    }
 
     @Override
     public void onBackPressed(){
