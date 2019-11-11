@@ -104,8 +104,6 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
 
     public void lanzarListado(){
         Log.d(TAG, "Lanzando listado...");
-        Intent intent = new Intent(FormularioActivity.this, ListadoActivity.class); //Comunicamos las 2 actividades
-        startActivity(intent);
         finish();
     }
 
