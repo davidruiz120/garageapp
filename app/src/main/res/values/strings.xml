@@ -4,5 +4,7 @@
     <string name="title_activity_listado" translatable="false">GarageApp</string>
     <string name="title_activity_formulario">Añadir vehículo</string>
     <string name="_0_resultados_encontrados">0 resultados encontrados</string>
-    <string name="acerca_de">Acerca de</string>
+    <string name="acerca_de">Sobre GarageApp</string>
+    <string name="ordenar">Ordenar</string>
+    <string name="buscar">Buscar</string>
 </resources>
