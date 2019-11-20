@@ -6,4 +6,5 @@
     <string name="title_activity_formulario">Add vehicle</string>
     <string name="ordenar">Sort</string>
     <string name="buscar">Search</string>
+    <string name="title_activity_acerca_de">About GarageApp</string>
 </resources>

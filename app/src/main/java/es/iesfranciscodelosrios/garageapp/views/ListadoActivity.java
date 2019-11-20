@@ -15,6 +15,7 @@ import es.iesfranciscodelosrios.garageapp.presenters.ListadoPresenter;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,20 +44,39 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
                 presenter.onClickAdd();
             }
         });
+
+
     }
 
-    @Override // Este método ya no se usa, porque el método que lanza el formularioactivity está desarrollado en el presenter
+    @Override
     public void lanzarFormulario() {
         Log.d(TAG, "Lanzando formulario...");
         Intent intent = new Intent(ListadoActivity.this, FormularioActivity.class); //Comunicamos las 2 actividades
         startActivity(intent);
     }
 
+    @Override
+    public void lanzarAcercaDe() {
+        Log.d(TAG, "Lanzando AcercaDeActivity...");
+        Intent intent = new Intent(ListadoActivity.this, AcercaDeActivity.class);
+        startActivity(intent);
+    }
 
-    @Override // Se añade el menú personalizado
+
+    @Override // Se añade el Toolbar personalizado
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_listado, menu);
+        return true;
+    }
+
+    @Override // Funcionalidad de las opciones del toolbar
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        switch (menuItem.getItemId()){
+            case R.id.action_acerca_de:
+                presenter.onClickSobreGarageApp();
+                break;
+        }
         return true;
     }
 

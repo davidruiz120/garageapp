@@ -4,9 +4,11 @@ public interface ListadoInterface {
 
     public interface View {
         void lanzarFormulario();
+        void lanzarAcercaDe();
     }
 
     public interface Presenter {
         void onClickAdd();
+        void onClickSobreGarageApp();
     }
 }

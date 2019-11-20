@@ -15,4 +15,9 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
         view.lanzarFormulario();
     }
 
+    @Override
+    public void onClickSobreGarageApp() {
+        view.lanzarAcercaDe();
+    }
+
 }
