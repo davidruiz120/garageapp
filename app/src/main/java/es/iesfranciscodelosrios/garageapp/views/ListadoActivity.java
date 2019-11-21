@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.iesfranciscodelosrios.garageapp.R;
 
@@ -73,6 +74,15 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     @Override // Funcionalidad de las opciones del toolbar
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()){
+            case R.id.action_buscar:
+                Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_ordenar:
+                Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_settings:
+                Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.action_acerca_de:
                 presenter.onClickSobreGarageApp();
                 break;
@@ -84,7 +94,6 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     public void onBackPressed(){
         super.onBackPressed();
         Log.d(TAG,"Ejecutando onBlackPressed en ListadoActivity...");
-        return;
     }
 
     @Override

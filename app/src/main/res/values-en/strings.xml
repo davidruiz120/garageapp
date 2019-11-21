@@ -7,4 +7,5 @@
     <string name="ordenar">Sort</string>
     <string name="buscar">Search</string>
     <string name="title_activity_acerca_de">About GarageApp</string>
+    <string name="desarrollador">Developer</string>
 </resources>

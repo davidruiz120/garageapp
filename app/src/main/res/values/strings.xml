@@ -8,4 +8,7 @@
     <string name="ordenar">Ordenar</string>
     <string name="buscar">Buscar</string>
     <string name="title_activity_acerca_de">Sobre GarageApp</string>
+    <string name="desarrollador">Desarrollador</string>
+    <string name="desarrollador_nombre" translatable="false">David Ruiz Hurtado</string>
+    <string name="desarrollador_email" translatable="false">adruiz@iesfranciscodelosrios.es</string>
 </resources>
