@@ -11,4 +11,15 @@
     <string name="desarrollador">Desarrollador</string>
     <string name="desarrollador_nombre" translatable="false">David Ruiz Hurtado</string>
     <string name="desarrollador_email" translatable="false">adruiz@iesfranciscodelosrios.es</string>
+    <string name="marca">Marca</string>
+    <string name="modelo">Modelo</string>
+    <string name="anyo">Año</string>
+    <string name="traccion">Tracción</string>
+    <string name="fecha_matriculacion">Fecha de matriculación</string>
+    <string name="edicion_especial">Edición Especial</string>
+    <string name="guardar">Guardar</string>
+    <string name="combustible">Combustible</string>
+    <string name="combustible_add">Añadir combustible</string>
+    <string name="anyadir">Añadir</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

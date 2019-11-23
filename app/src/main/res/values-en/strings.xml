@@ -8,4 +8,15 @@
     <string name="buscar">Search</string>
     <string name="title_activity_acerca_de">About GarageApp</string>
     <string name="desarrollador">Developer</string>
+    <string name="anyo">Year</string>
+    <string name="edicion_especial">Special Edition</string>
+    <string name="marca">Brand</string>
+    <string name="modelo">Model</string>
+    <string name="fecha_matriculacion">Registration date</string>
+    <string name="traccion">Traction</string>
+    <string name="guardar">Save</string>
+    <string name="combustible">Fuel</string>
+    <string name="combustible_add">Add Fuel</string>
+    <string name="anyadir">Add</string>
+    <string name="cancelar">Cancel</string>
 </resources>
