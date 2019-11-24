@@ -239,7 +239,7 @@
                     android:textSize="17dp"/>
 
                 <Switch
-                    android:id="@+id/imputAddEdicionEspecial"
+                    android:id="@+id/inputAddEdicionEspecial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"/>
@@ -254,10 +254,19 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/imputBtnGuardar"
+                    android:id="@+id/inputBtnGuardar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/guardar" />
+                    android:text="@string/guardar"
+                    android:drawableLeft="@drawable/ic_save"/>
+
+                <Button
+                    android:id="@+id/inputBtnBorrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/borrar"
+                    android:drawableLeft="@drawable/ic_delete"/>
             </LinearLayout>
 
 

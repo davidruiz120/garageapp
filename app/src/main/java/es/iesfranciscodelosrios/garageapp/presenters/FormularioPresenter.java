@@ -14,4 +14,9 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
     public void onClickGuardar() {
         view.lanzarListado();
     }
+
+    @Override
+    public void onClickBorrar() {
+        view.lanzarListado();
+    }
 }

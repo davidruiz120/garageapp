@@ -22,4 +22,6 @@
     <string name="combustible_add">Añadir combustible</string>
     <string name="anyadir">Añadir</string>
     <string name="cancelar">Cancelar</string>
+    <string name="borrar">Borrar</string>
+    <string name="borrar_confirmar">¿Estás seguro de que quieres eliminar?</string>
 </resources>

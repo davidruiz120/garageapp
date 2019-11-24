@@ -10,5 +10,6 @@ public interface FormularioInterface {
 
     public interface Presenter{
         void onClickGuardar();
+        void onClickBorrar();
     }
 }

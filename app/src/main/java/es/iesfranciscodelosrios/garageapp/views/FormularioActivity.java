@@ -4,12 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,20 +16,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import es.iesfranciscodelosrios.garageapp.R;
@@ -60,7 +55,6 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     TextInputLayout inputAddFechaMatriculacionTIL;
     EditText inputAddFechaMatriculacion;
     Button inputAddFechaMatriculacionBtn;
-
 
     Calendar fechaActual;
     int dia, mes, anyo;
@@ -90,8 +84,8 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
          * que ha inicializado y después adaptarlo al Spinner (conocido como select en HTML) del Formulario
          */
         //ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this, R.array.combo_combustible, android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<String> adatp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, selectAddCombustileArray);
-        selectAddCombustible.setAdapter(adatp);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, selectAddCombustileArray);
+        selectAddCombustible.setAdapter(adapter);
 
         /**
          * Al hacer click en el botón para añadir una opción en el Spinner, se abre un layout para poder
@@ -108,21 +102,21 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
 
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
                 alertDialogBuilderUserInput
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.anyadir), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                Log.d(TAG, "Añadiendo nueva opción en el Spinner");
-                                selectAddCombustileArray.add(userInputDialogEditText.getText().toString());
-                            }
-                        })
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.anyadir), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            Log.d(TAG, "Añadiendo nueva opción en el Spinner");
+                            selectAddCombustileArray.add(userInputDialogEditText.getText().toString());
+                        }
+                    })
 
-                        .setNegativeButton(getString(R.string.cancelar),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogBox, int id) {
-                                        Log.d(TAG, "Pulsando boton Cancelar en el AlertDialog de Combustible");
-                                        dialogBox.cancel();
-                                    }
-                                });
+                    .setNegativeButton(getString(R.string.cancelar),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                Log.d(TAG, "Pulsando boton Cancelar en el AlertDialog de Combustible");
+                                dialogBox.cancel();
+                            }
+                        });
 
                 AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
@@ -164,12 +158,44 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
 
         presenter = new FormularioPresenter(this);
 
-        Button imputBtnGuardar = findViewById(R.id.imputBtnGuardar);
-        imputBtnGuardar.setOnClickListener(new View.OnClickListener() {
+        Button inputBtnGuardar = findViewById(R.id.inputBtnGuardar);
+        inputBtnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Pulsando boton Guardar...");
                 presenter.onClickGuardar();
+            }
+        });
+
+        Button inputBtnBorrar = findViewById(R.id.inputBtnBorrar);
+        inputBtnBorrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Pulsando boton Borrar...");
+                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+                View mView = layoutInflaterAndroid.inflate(R.layout.alert_dialog_add_borrar, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+                alertDialogBuilderUserInput.setView(mView);
+
+                alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.borrar), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                        Log.d(TAG, "Click en borrar");
+                        presenter.onClickBorrar();
+                        }
+                    })
+
+                    .setNegativeButton(getString(R.string.cancelar),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                Log.d(TAG, "Pulsando boton Cancelar en el AlertDialog de Borrar");
+                                dialogBox.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
             }
         });
 
@@ -197,6 +223,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         inputAddFechaMatriculacion = findViewById(R.id.inputAddFechaMatriculacion);
         inputAddFechaMatriculacionBtn = findViewById(R.id.inputAddFechaMatriculacionBtn);
     }
+
 
     @Override
     public void validarFormulario(){
@@ -274,6 +301,12 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     public void lanzarListado(){
         Log.d(TAG, "Lanzando listado...");
         finish();
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Log.d(TAG,"Ejecutando onBlackPressed en ListadoActivity...");
     }
 
     @Override

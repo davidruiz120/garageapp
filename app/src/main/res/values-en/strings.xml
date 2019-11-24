@@ -19,4 +19,6 @@
     <string name="combustible_add">Add Fuel</string>
     <string name="anyadir">Add</string>
     <string name="cancelar">Cancel</string>
+    <string name="borrar">Delete</string>
+    <string name="borrar_confirmar">Are you sure you want to delete?</string>
 </resources>
