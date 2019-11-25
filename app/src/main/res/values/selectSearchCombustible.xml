@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="combo_search_combustible">
+        <item>Gasolina 98</item>
+    </string-array>
+
+</resources>

@@ -20,4 +20,9 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
         view.lanzarAcercaDe();
     }
 
+    @Override
+    public void onClickBuscar() {
+        view.lanzarBuscar();
+    }
+
 }

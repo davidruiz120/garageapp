@@ -63,6 +63,12 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         startActivity(intent);
     }
 
+    @Override
+    public void lanzarBuscar() {
+        Log.d(TAG, "Lanzando BuscarActivity...");
+        Intent intent = new Intent(ListadoActivity.this, BuscarActivity.class);
+        startActivity(intent);
+    }
 
     @Override // Se añade el Toolbar personalizado
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,7 +81,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()){
             case R.id.action_buscar:
-                Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();
+                presenter.onClickBuscar();
                 break;
             case R.id.action_ordenar:
                 Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();

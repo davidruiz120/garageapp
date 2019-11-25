@@ -74,7 +74,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /**
-         * Método para "guardar" los elementos de, en este caso, el formulario
+         * Método para buscar los elementos del formulario
          */
         inicializarElementos();
 
@@ -248,7 +248,9 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(esSoloAnyo){
-                    Integer anyo = Integer.parseInt(s.toString());
+                    try{
+                        Integer anyo = Integer.parseInt(s.toString());
+                    } catch (Exception e){}
                     if(anyo < 1903 || anyo > fechaActual.get(Calendar.YEAR) + 1){
                         layout.setError("Año incorrecto");
                         layout.setErrorEnabled(true);
