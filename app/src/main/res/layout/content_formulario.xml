@@ -37,6 +37,13 @@
                     android:layout_height="143dp"
                     android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/imgexample01" />
+
+                <Button
+                    android:id="@+id/inputAddImagenBtn"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableLeft="@drawable/ic_photo_library"/>
             </LinearLayout>
 
             <LinearLayout

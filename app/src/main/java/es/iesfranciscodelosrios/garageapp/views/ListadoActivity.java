@@ -8,9 +8,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 
 import es.iesfranciscodelosrios.garageapp.interfaces.ListadoInterface;
+import es.iesfranciscodelosrios.garageapp.models.Vehiculo;
 import es.iesfranciscodelosrios.garageapp.presenters.ListadoPresenter;
 
 import android.view.Menu;
@@ -20,12 +24,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import es.iesfranciscodelosrios.garageapp.R;
 
 public class ListadoActivity extends AppCompatActivity implements ListadoInterface.View {
 
     String TAG = "GarageApp/ListadoActivity";
     private ListadoInterface.Presenter presenter;
+    private ArrayList<Vehiculo> items ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +54,48 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         });
 
 
+
+        // Inicializa el RecyclerView
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listadoRecyclerView);
+
+        // Crea el Adaptador con los datos de la lista anterior
+        items = presenter.getAllVehiculo();
+        VehiculoAdapter adaptador = new VehiculoAdapter(items);
+
+
+        // Asocia el Adaptador al RecyclerView
+        recyclerView.setAdapter(adaptador);
+
+        // Muestra el RecyclerView en vertical
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Asocia el elemento de la lista con una acción al ser pulsado
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Acción al pulsar el elemento
+                int position = recyclerView.getChildAdapterPosition(v);
+                Log.d(TAG, "Click en RV: " + position + " " + items.get(position).getId().toString());
+                presenter.onClickRecyclerView(items.get(position).getId());
+            }
+        });
+
+
     }
 
     @Override
     public void lanzarFormulario() {
         Log.d(TAG, "Lanzando formulario...");
         Intent intent = new Intent(ListadoActivity.this, FormularioActivity.class); //Comunicamos las 2 actividades
+        startActivity(intent);
+    }
+
+    @Override
+    public void lanzarFormularioPorID(int id) {
+        Log.d(TAG, "Lanzando formulario por ID...");
+        Intent intent = new Intent(ListadoActivity.this, FormularioActivity.class); //Comunicamos las 2 actividades
+        // bundle para encapsular el ID al activity
+        intent.putExtra("idVehiculo", id);
         startActivity(intent);
     }
 

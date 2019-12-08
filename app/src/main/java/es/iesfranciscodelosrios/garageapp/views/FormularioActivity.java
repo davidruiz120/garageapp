@@ -1,15 +1,19 @@
 package es.iesfranciscodelosrios.garageapp.views;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,7 +44,10 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     String TAG = "GarageApp/FormularioActivity";
     private FormularioInterface.Presenter presenter;
     final Context c = this;
+    private Context myContext;
+    final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
 
+    Button inputAddImagenBtn;
     TextInputLayout inputAddMarcaTIL;
     EditText inputAddMarca;
     TextInputLayout inputAddModeloTIL;
@@ -65,6 +72,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         setContentView(R.layout.activity_formulario);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        myContext = this;
 
         /**
          * Agrego el Up Button, la funcionalidad del mismo se establece en AndroidManifest.xml
@@ -78,6 +86,13 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
          */
         inicializarElementos();
 
+
+        inputAddImagenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickImage(myContext);
+            }
+        });
 
         /**
          * En las siguientes líneas lo que se hace es crear un adaptador para poder cargar el array
@@ -204,6 +219,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     @Override
     public void inicializarElementos(){
         Log.d(TAG, "Inicializando elementos...");
+        inputAddImagenBtn = findViewById(R.id.inputAddImagenBtn);
         inputAddMarcaTIL = findViewById(R.id.inputAddMarcaTIL);
         inputAddMarca = findViewById(R.id.inputAddMarca);
         inputAddModeloTIL = findViewById(R.id.inputAddModeloTIL);
@@ -238,6 +254,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         // Fecha de matriculación
         addTextChangedListener(inputAddFechaMatriculacion, inputAddFechaMatriculacionTIL, true, false);
     }
+
 
     public void addTextChangedListener(EditText input, final TextInputLayout layout, final boolean esFecha, final boolean esSoloAnyo) {
         Log.d(TAG, "Validando campo de formulario");
@@ -303,6 +320,26 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     public void lanzarListado(){
         Log.d(TAG, "Lanzando listado...");
         finish();
+    }
+
+    @Override
+    public void requestPermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}
+                , CODE_WRITE_EXTERNAL_STORAGE_PERMISSION
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case CODE_WRITE_EXTERNAL_STORAGE_PERMISSION:
+                presenter.resultPermision(grantResults[0]);
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
