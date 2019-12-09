@@ -81,6 +81,8 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
          */
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        presenter = new FormularioPresenter(this);
+
         /**
          * Método para buscar los elementos del formulario
          */
@@ -93,6 +95,10 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
                 presenter.onClickImage(myContext);
             }
         });
+
+
+        String editIdVehiculo = getIntent().getStringExtra("editIdVehiculo");
+        inputAddMarca.setText(editIdVehiculo);
 
         /**
          * En las siguientes líneas lo que se hace es crear un adaptador para poder cargar el array
@@ -171,7 +177,6 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
          */
         validarFormulario();
 
-        presenter = new FormularioPresenter(this);
 
         Button inputBtnGuardar = findViewById(R.id.inputBtnGuardar);
         inputBtnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -244,18 +249,18 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     @Override
     public void validarFormulario(){
         // Marca
-        addTextChangedListener(inputAddMarca, inputAddMarcaTIL, false, false);
+        presenter.addTextChangedListener(inputAddMarca, inputAddMarcaTIL, false, false);
         // Modelo
-        addTextChangedListener(inputAddModelo, inputAddModeloTIL, false, false);
+        presenter.addTextChangedListener(inputAddModelo, inputAddModeloTIL, false, false);
         // Año
-        addTextChangedListener(inputAddAnyo, inputAddAnyoTIL, false, true);
+        presenter.addTextChangedListener(inputAddAnyo, inputAddAnyoTIL, false, true);
         // Tracción
-        addTextChangedListener(inputAddTraccion, inputAddTraccionTIL, false, false);
+        presenter.addTextChangedListener(inputAddTraccion, inputAddTraccionTIL, false, false);
         // Fecha de matriculación
-        addTextChangedListener(inputAddFechaMatriculacion, inputAddFechaMatriculacionTIL, true, false);
+        presenter.addTextChangedListener(inputAddFechaMatriculacion, inputAddFechaMatriculacionTIL, true, false);
     }
 
-
+/**
     public void addTextChangedListener(EditText input, final TextInputLayout layout, final boolean esFecha, final boolean esSoloAnyo) {
         Log.d(TAG, "Validando campo de formulario");
         input.addTextChangedListener(new TextWatcher() {
@@ -314,7 +319,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
             return false;
         }
         return true;
-    }
+    }*/
 
     @Override
     public void lanzarListado(){

@@ -22,6 +22,11 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
+    public void deleteVehiculo(Vehiculo vehiculo) {
+        VehiculoModel.deleteVehiculo(vehiculo);
+    }
+
+    @Override
     public void onClickRecyclerView(int id) {
         view.lanzarFormularioPorID(id);
     }

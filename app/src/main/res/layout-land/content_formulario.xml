@@ -36,7 +36,7 @@
                     android:layout_width="173dp"
                     android:layout_height="143dp"
                     android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/imgexample01" />
+                    app:srcCompat="@drawable/sin_imagen" />
 
                 <Button
                     android:id="@+id/inputAddImagenBtn"

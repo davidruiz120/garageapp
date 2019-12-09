@@ -6,8 +6,10 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,6 +83,23 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         });
 
 
+        /**
+         * Swipe del RecyclerView
+         */
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Integer id = viewHolder.getAdapterPosition();
+                presenter.deleteVehiculo(items.get(id));
+            }
+        }).attachToRecyclerView(recyclerView);
+
     }
 
     @Override
@@ -95,7 +114,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         Log.d(TAG, "Lanzando formulario por ID...");
         Intent intent = new Intent(ListadoActivity.this, FormularioActivity.class); //Comunicamos las 2 actividades
         // bundle para encapsular el ID al activity
-        intent.putExtra("idVehiculo", id);
+        intent.putExtra("editIdVehiculo", Integer.toString(id));
         startActivity(intent);
     }
 

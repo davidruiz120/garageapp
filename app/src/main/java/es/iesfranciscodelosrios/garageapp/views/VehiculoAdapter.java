@@ -41,12 +41,15 @@ public class VehiculoAdapter extends RecyclerView.Adapter<VehiculoAdapter.Vehicu
             public void VehiculoBind(Vehiculo item) {
                 listMarca.setText(item.getMarca());
                 listModelo.setText(item.getModelo());
-                byte[] decodedString = Base64.decode(item.getImagen(), Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(
-                        decodedString,
-                        0,
-                        decodedString.length);
-                listImagen.setImageBitmap(decodedByte);
+                try{
+                    byte[] decodedString = Base64.decode(item.getImagen(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(
+                            decodedString,
+                            0,
+                            decodedString.length);
+                    listImagen.setImageBitmap(decodedByte);
+                } catch (NullPointerException e) {};
+
             }
         }
 

@@ -18,6 +18,7 @@ public interface ListadoInterface {
         void onClickSobreGarageApp();
         void onClickBuscar();
         ArrayList<Vehiculo> getAllVehiculo();
+        void deleteVehiculo(Vehiculo vehiculo);
         void onClickRecyclerView(int id);
     }
 }
