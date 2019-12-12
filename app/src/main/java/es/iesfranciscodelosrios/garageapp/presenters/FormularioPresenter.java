@@ -1,13 +1,18 @@
 package es.iesfranciscodelosrios.garageapp.presenters;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 
@@ -47,7 +52,7 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
         if(ReadPermision != PackageManager.PERMISSION_GRANTED){
             view.requestPermission();
         } else{
-            //view.launchGallery();
+            view.launchGallery();
         }
     }
 
@@ -56,11 +61,19 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
         if (result == PackageManager.PERMISSION_GRANTED) {
             // Permiso aceptado
             Log.d("GarageApp", "Permiso aceptado");
-            // view.launchGallery();
+            view.launchGallery();
         } else {
             // Permiso rechazado
             Log.d("GarageApp", "Permiso rechazado");
-            //view.showError("Sin permisos no puedes entrar");
+            view.showError("Sin permisos no puedes entrar");
+        }
+    }
+
+    @Override
+    public void onActivityResultImagen(int requestCode, int resultCode, @Nullable Intent data, ImageView imageView, Activity activity){
+        if(resultCode == activity.RESULT_OK){
+            Uri path = data.getData();
+            imageView.setImageURI(path);
         }
     }
 
