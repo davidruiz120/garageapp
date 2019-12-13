@@ -96,8 +96,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 Integer id = viewHolder.getAdapterPosition();
-                presenter.deleteVehiculo(items.get(id));
-                Toast.makeText(ListadoActivity.this, "Elemento eliminado", Toast.LENGTH_SHORT).show();
+                presenter.deleteVehiculo(ListadoActivity.this, items.get(id));
             }
         }).attachToRecyclerView(recyclerView);
 

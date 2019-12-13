@@ -1,5 +1,8 @@
 package es.iesfranciscodelosrios.garageapp.presenters;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import es.iesfranciscodelosrios.garageapp.interfaces.ListadoInterface;
@@ -22,8 +25,14 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
-    public void deleteVehiculo(Vehiculo vehiculo) {
-        VehiculoModel.deleteVehiculo(vehiculo);
+    public void deleteVehiculo(Activity activity, Vehiculo vehiculo) {
+        try {
+            VehiculoModel.deleteVehiculo(vehiculo);
+            Toast.makeText(activity, "Elemento eliminado", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(activity, "Error al eliminar", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

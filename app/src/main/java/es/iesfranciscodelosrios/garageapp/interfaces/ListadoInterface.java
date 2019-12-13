@@ -1,5 +1,7 @@
 package es.iesfranciscodelosrios.garageapp.interfaces;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 
 import es.iesfranciscodelosrios.garageapp.models.Vehiculo;
@@ -18,7 +20,7 @@ public interface ListadoInterface {
         void onClickSobreGarageApp();
         void onClickBuscar();
         ArrayList<Vehiculo> getAllVehiculo();
-        void deleteVehiculo(Vehiculo vehiculo);
+        void deleteVehiculo(Activity activity, Vehiculo vehiculo);
         void onClickRecyclerView(int id);
     }
 }
