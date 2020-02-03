@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -33,6 +34,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -43,6 +46,7 @@ import java.util.List;
 
 import es.iesfranciscodelosrios.garageapp.R;
 import es.iesfranciscodelosrios.garageapp.interfaces.FormularioInterface;
+import es.iesfranciscodelosrios.garageapp.models.Vehiculo;
 import es.iesfranciscodelosrios.garageapp.presenters.FormularioPresenter;
 
 public class FormularioActivity extends AppCompatActivity implements FormularioInterface.View{
@@ -69,6 +73,9 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     TextInputLayout inputAddFechaMatriculacionTIL;
     EditText inputAddFechaMatriculacion;
     Button inputAddFechaMatriculacionBtn;
+    Switch inputAddEdicionEspecial;
+    Button inputBtnGuardar;
+    Button inputBtnBorrar;
 
     Calendar fechaActual;
     int dia, mes, anyo;
@@ -93,7 +100,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         /**
          * Método para buscar los elementos del formulario
          */
-        inicializarElementos();
+        this.inicializarElementos();
 
 
         inputAddImagenBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,14 +111,12 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         });
 
 
-        String editIdVehiculo = getIntent().getStringExtra("editIdVehiculo");
-        inputAddMarca.setText(editIdVehiculo);
-
         /**
          * En las siguientes líneas lo que se hace es crear un adaptador para poder cargar el array
          * que ha inicializado y después adaptarlo al Spinner (conocido como select en HTML) del Formulario
          */
         //ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this, R.array.combo_combustible, android.R.layout.simple_spinner_dropdown_item);
+        this.selectAddCombustileArray = presenter.getArrayCombustibles();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, selectAddCombustileArray);
         selectAddCombustible.setAdapter(adapter);
 
@@ -179,22 +184,85 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
             }
         });
 
+
         /**
-         * Método que se encarga de validar el formulario
+         *
          */
-        validarFormulario();
+        this.onEditVehiculo();
 
 
-        Button inputBtnGuardar = findViewById(R.id.inputBtnGuardar);
+        inputBtnGuardar = findViewById(R.id.inputBtnGuardar);
         inputBtnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Pulsando boton Guardar...");
-                presenter.onClickGuardar();
+                boolean ok = true;
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setImagen(presenter.bitmapToBase64(((BitmapDrawable)inputAddImagen.getDrawable()).getBitmap()));
+
+                if(!vehiculo.setMarca(inputAddMarca.getText().toString())){
+                    inputAddMarcaTIL.setError(getString(R.string.form_campo_oblig));
+                    inputAddMarcaTIL.setErrorEnabled(true);
+                    ok = false;
+                } else {
+                    inputAddMarcaTIL.setError("");
+                    inputAddMarcaTIL.setErrorEnabled(false);
+                }
+
+                if(!vehiculo.setModelo(inputAddModelo.getText().toString())){
+                    inputAddModeloTIL.setError(getString(R.string.form_campo_oblig));
+                    inputAddModeloTIL.setErrorEnabled(true);
+                    ok = false;
+                } else {
+                    inputAddModeloTIL.setError("");
+                    inputAddModeloTIL.setErrorEnabled(false);
+                }
+
+                try {
+                    if(!vehiculo.setAnyo(Integer.parseInt(inputAddAnyo.getText().toString()))){
+                        inputAddAnyoTIL.setError(getString(R.string.form_anyo_incorrecto));
+                        inputAddAnyoTIL.setErrorEnabled(true);
+                        ok = false;
+                    } else {
+                        inputAddAnyoTIL.setError("");
+                        inputAddAnyoTIL.setErrorEnabled(false);
+                    }
+                } catch (NumberFormatException e){
+                    inputAddAnyoTIL.setError(getString(R.string.form_anyo_incorrecto));
+                    inputAddAnyoTIL.setErrorEnabled(true);
+                    ok = false;
+                }
+
+                if(!vehiculo.setTraccion(inputAddTraccion.getText().toString())){
+                    inputAddTraccionTIL.setError(getString(R.string.form_campo_oblig));
+                    inputAddTraccionTIL.setErrorEnabled(true);
+                    ok = false;
+                } else {
+                    inputAddTraccionTIL.setError("");
+                    inputAddTraccionTIL.setErrorEnabled(false);
+                }
+
+                vehiculo.setCombustible(selectAddCombustible.getSelectedItem().toString());
+
+                if(!vehiculo.setFechamatriculacion(inputAddFechaMatriculacion.getText().toString())){
+                    inputAddFechaMatriculacionTIL.setError(getString(R.string.form_fecha_incorrecta));
+                    inputAddFechaMatriculacionTIL.setErrorEnabled(true);
+                    ok = false;
+                } else {
+                    inputAddFechaMatriculacionTIL.setError("");
+                    inputAddFechaMatriculacionTIL.setErrorEnabled(false);
+                }
+
+                vehiculo.setEdicionespecial(inputAddEdicionEspecial.isChecked() ? 1 : 0);
+
+                if(ok){
+                    presenter.onClickGuardar(vehiculo);
+                }
+
             }
         });
 
-        Button inputBtnBorrar = findViewById(R.id.inputBtnBorrar);
+
         inputBtnBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,17 +311,23 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         inputAddTraccion = findViewById(R.id.inputAddTraccion);
         selectAddCombustible = findViewById(R.id.inputAddCombustible);
         selectAddCombustibleBtn = findViewById(R.id.inputAddCombustibleBtn);
-        selectAddCombustileArray.add("Gasolina 98");
-        selectAddCombustileArray.add("Gasolina 95");
-        selectAddCombustileArray.add("Diésel/Gasóleo A");
-        selectAddCombustileArray.add("Diésel/Gasóleo A+");
-        selectAddCombustileArray.add("Gas Natural");
         inputAddFechaMatriculacionTIL = findViewById(R.id.inputAddFechaMatriculacionTIL);
         inputAddFechaMatriculacion = findViewById(R.id.inputAddFechaMatriculacion);
         inputAddFechaMatriculacionBtn = findViewById(R.id.inputAddFechaMatriculacionBtn);
+        inputAddEdicionEspecial = findViewById(R.id.inputAddEdicionEspecial);
+        inputBtnGuardar = findViewById(R.id.inputBtnGuardar);
+        inputBtnBorrar = findViewById(R.id.inputBtnBorrar);
+
+        /**
+         * Si no existe alguna variable que le paso desde Listado,
+         * que oculte el btn Borrar
+         */
+        if(getIntent().getStringExtra("editIdVehiculo") == null){
+            inputBtnBorrar.setVisibility(View.GONE);
+        }
     }
 
-
+    /**
     @Override
     public void validarFormulario(){
         // Marca
@@ -266,7 +340,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         presenter.addTextChangedListener(inputAddTraccion, inputAddTraccionTIL, false, false);
         // Fecha de matriculación
         presenter.addTextChangedListener(inputAddFechaMatriculacion, inputAddFechaMatriculacionTIL, true, false);
-    }
+    }*/
 
 /**
     public void addTextChangedListener(EditText input, final TextInputLayout layout, final boolean esFecha, final boolean esSoloAnyo) {
@@ -367,6 +441,11 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     }
 
     @Override
+    public void showToast(String mensaje){
+        Toast.makeText(FormularioActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void launchGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
@@ -374,9 +453,36 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     }
 
     @Override
+    public void onEditVehiculo() {
+
+        // Cargo los datos al formulario
+        String editImagenVehiculo = getIntent().getStringExtra("editImagenVehiculo");
+        try{
+            inputAddImagen.setImageBitmap(presenter.stringToBitmap(editImagenVehiculo));
+        } catch (RuntimeException e){
+            Log.d(TAG, "onEditVehiculo - error en imagen");
+            e.printStackTrace();
+        }
+        String editMarcaVehiculo = getIntent().getStringExtra("editMarcaVehiculo");
+        inputAddMarca.setText(editMarcaVehiculo);
+        String editModeloVehiculo = getIntent().getStringExtra("editModeloVehiculo");
+        inputAddModelo.setText(editModeloVehiculo);
+        String editAnyoVehiculo = getIntent().getStringExtra("editAnyoVehiculo");
+        inputAddAnyo.setText(editAnyoVehiculo);
+        String editTraccionVehiculo = getIntent().getStringExtra("editTraccionVehiculo");
+        inputAddTraccion.setText(editTraccionVehiculo);
+        String editCombustibleVehiculo = getIntent().getStringExtra("editCombustibleVehiculo");
+        selectAddCombustible.setSelection(selectAddCombustileArray.indexOf(editCombustibleVehiculo));
+        String editFechaMatriculacionVehiculo = getIntent().getStringExtra("editFechaMatriculacionVehiculo");
+        inputAddFechaMatriculacion.setText(editFechaMatriculacionVehiculo);
+        //String editEdicionEspecialVehiculo = getIntent().getStringExtra("editEdicionEspecialVehiculo");
+        //inputAddEdicionEspecial.setChecked(editEdicionEspecialVehiculo);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        presenter.onActivityResultImagen(requestCode, resultCode, data, inputAddImagen, this);
+        presenter.onActivityResultImagen(requestCode, resultCode, data, inputAddImagen, this, this.c);
     }
 
     @Override

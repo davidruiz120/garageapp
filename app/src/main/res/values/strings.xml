@@ -25,4 +25,7 @@
     <string name="borrar">Borrar</string>
     <string name="borrar_confirmar">¿Estás seguro de que quieres eliminar?</string>
     <string name="title_activity_buscar">Buscar</string>
+    <string name="form_campo_oblig">Campo obligatorio</string>
+    <string name="form_anyo_incorrecto">Año incorrecto</string>
+    <string name="form_fecha_incorrecta">Formato fecha incorrecta</string>
 </resources>

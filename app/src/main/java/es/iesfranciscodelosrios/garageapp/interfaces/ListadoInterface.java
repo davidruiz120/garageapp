@@ -10,7 +10,7 @@ public interface ListadoInterface {
 
     public interface View {
         void lanzarFormulario();
-        void lanzarFormularioPorID(int id);
+        void lanzarFormularioPorID(int id, Vehiculo vehiculo);
         void lanzarAcercaDe();
         void lanzarBuscar();
     }
@@ -21,6 +21,6 @@ public interface ListadoInterface {
         void onClickBuscar();
         ArrayList<Vehiculo> getAllVehiculo();
         void deleteVehiculo(Activity activity, Vehiculo vehiculo);
-        void onClickRecyclerView(int id);
+        void onClickRecyclerView(int id, Vehiculo vehiculo);
     }
 }

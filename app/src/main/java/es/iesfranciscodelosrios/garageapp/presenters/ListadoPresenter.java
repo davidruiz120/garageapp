@@ -16,7 +16,7 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
 
     public ListadoPresenter (ListadoInterface.View view){
         this.view = view;
-        this.vehiculo = new VehiculoModel();
+        this.vehiculo = VehiculoModel.getInstance();
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
-    public void onClickRecyclerView(int id) {
-        view.lanzarFormularioPorID(id);
+    public void onClickRecyclerView(int id, Vehiculo vehiculo) {
+        view.lanzarFormularioPorID(id, vehiculo);
     }
 
     @Override
