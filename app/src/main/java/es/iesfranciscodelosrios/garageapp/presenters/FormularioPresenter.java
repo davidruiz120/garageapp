@@ -58,6 +58,17 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
     }
 
     @Override
+    public void onClickActualizar(Vehiculo vehiculo) {
+        Log.d(TAG,"Método onClickActualizar");
+        if(model.updateVehiculo(vehiculo)){
+            view.showToast("Se ha actualizado el vehículo");
+            view.lanzarListado();
+        } else {
+            view.showError("No se ha podido actualizar el vehículo");
+        }
+    }
+
+    @Override
     public void onClickBorrar() {
         view.lanzarListado();
     }
@@ -128,6 +139,11 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
     @Override
     public List<String> getArrayCombustibles() {
         return model.getArrayCombustibles();
+    }
+
+    @Override
+    public Vehiculo getVehiculoFromID(String id){
+        return model.getVehiculoFromID(id);
     }
 
     /**

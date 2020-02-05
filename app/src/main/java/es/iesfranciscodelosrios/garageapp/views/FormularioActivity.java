@@ -57,6 +57,8 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     private Context myContext;
     final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
 
+    Vehiculo vehiculo = new Vehiculo();
+
     ImageView inputAddImagen;
     Button inputAddImagenBtn;
     TextInputLayout inputAddMarcaTIL;
@@ -198,7 +200,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
             public void onClick(View v) {
                 Log.d(TAG, "Pulsando boton Guardar...");
                 boolean ok = true;
-                Vehiculo vehiculo = new Vehiculo();
+                //Vehiculo vehiculo = new Vehiculo();
                 vehiculo.setImagen(presenter.bitmapToBase64(((BitmapDrawable)inputAddImagen.getDrawable()).getBitmap()));
 
                 if(!vehiculo.setMarca(inputAddMarca.getText().toString())){
@@ -257,7 +259,12 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
                 vehiculo.setEdicionespecial(inputAddEdicionEspecial.isChecked() ? 1 : 0);
 
                 if(ok){
-                    presenter.onClickGuardar(vehiculo);
+                    if(getIntent().getStringExtra("editIdVehiculo") == null){
+                        presenter.onClickGuardar(vehiculo);
+                    } else {
+                        presenter.onClickActualizar(vehiculo);
+                    }
+
                 }
 
             }
@@ -320,7 +327,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         inputBtnBorrar = findViewById(R.id.inputBtnBorrar);
 
         /**
-         * Si no existe alguna variable que le paso desde Listado,
+         * Si no existe la variable que le paso desde Listado,
          * que oculte el btn Borrar
          */
         if(getIntent().getStringExtra("editIdVehiculo") == null){
@@ -458,29 +465,27 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
     @Override
     public void onEditVehiculo() {
 
+        String id = getIntent().getStringExtra("editIdVehiculo");
+
+        Vehiculo vehiculoEdit = new Vehiculo();
+        vehiculoEdit = presenter.getVehiculoFromID(id);
+        vehiculo = vehiculoEdit;
+
         // Cargo los datos al formulario
-        String editImagenVehiculo = getIntent().getStringExtra("editImagenVehiculo");
         try{
-            inputAddImagen.setImageBitmap(presenter.stringToBitmap(editImagenVehiculo));
+            inputAddImagen.setImageBitmap(presenter.stringToBitmap(vehiculo.getImagen()));
         } catch (RuntimeException e){
             Log.d(TAG, "onEditVehiculo - error en imagen");
             e.printStackTrace();
         }
-        String editMarcaVehiculo = getIntent().getStringExtra("editMarcaVehiculo");
-        inputAddMarca.setText(editMarcaVehiculo);
-        String editModeloVehiculo = getIntent().getStringExtra("editModeloVehiculo");
-        inputAddModelo.setText(editModeloVehiculo);
-        String editAnyoVehiculo = getIntent().getStringExtra("editAnyoVehiculo");
-        inputAddAnyo.setText(editAnyoVehiculo);
-        String editTraccionVehiculo = getIntent().getStringExtra("editTraccionVehiculo");
-        inputAddTraccion.setText(editTraccionVehiculo);
-        String editCombustibleVehiculo = getIntent().getStringExtra("editCombustibleVehiculo");
-        selectAddCombustible.setSelection(selectAddCombustileArray.indexOf(editCombustibleVehiculo));
-        String editFechaMatriculacionVehiculo = getIntent().getStringExtra("editFechaMatriculacionVehiculo");
-        inputAddFechaMatriculacion.setText(editFechaMatriculacionVehiculo);
-        String editEdicionEspecialVehiculo = getIntent().getStringExtra("editEdicionEspecialVehiculo");
+        inputAddMarca.setText(vehiculo.getMarca());
+        inputAddModelo.setText(vehiculo.getModelo());
+        inputAddAnyo.setText(Integer.toString(vehiculo.getAnyo()));
+        inputAddTraccion.setText(vehiculo.getTraccion());
+        selectAddCombustible.setSelection(selectAddCombustileArray.indexOf(vehiculo.getCombustible()));
+        inputAddFechaMatriculacion.setText(vehiculo.getFechamatriculacion());
         try{
-            if(editEdicionEspecialVehiculo.equals("1")){
+            if(vehiculo.getEdicionespecial() == 1){
                 inputAddEdicionEspecial.setChecked(true);
             } else {
                 inputAddEdicionEspecial.setChecked(false);

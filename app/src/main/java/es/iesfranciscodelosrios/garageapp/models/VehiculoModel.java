@@ -129,6 +129,37 @@ public class VehiculoModel extends SQLiteOpenHelper {
         }
     }
 
+    public boolean updateVehiculo(Vehiculo vehiculo){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+
+        try{
+            ContentValues values = new ContentValues();
+            values.put("imagen", vehiculo.getImagen());
+            values.put("marca", vehiculo.getMarca());
+            values.put("modelo", vehiculo.getModelo());
+            values.put("anyo", vehiculo.getAnyo());
+            values.put("traccion", vehiculo.getTraccion());
+            values.put("combustible", vehiculo.getCombustible());
+            values.put("fechamatriculacion", vehiculo.getFechamatriculacion());
+            values.put("edicionespecial", vehiculo.getEdicionespecial());
+
+            String[] args = new String[]{Integer.toString(vehiculo.getId())};
+
+            db.update("Vehiculo", values, "id=?", args);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return false;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return true;
+        }
+
+    }
+
     public static void deleteVehiculo(Vehiculo vehiculo){
 
 

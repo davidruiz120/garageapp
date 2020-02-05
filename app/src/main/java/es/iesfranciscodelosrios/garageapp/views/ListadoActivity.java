@@ -77,19 +77,11 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     }
 
     @Override
-    public void lanzarFormularioPorID(int id, Vehiculo vehiculo) {
+    public void lanzarFormularioPorID(int id) {
         Log.d(TAG, "Lanzando formulario por ID...");
         Intent intent = new Intent(ListadoActivity.this, FormularioActivity.class); //Comunicamos las 2 actividades
         // bundle para encapsular el ID al activity
         intent.putExtra("editIdVehiculo", Integer.toString(id));
-        intent.putExtra("editImagenVehiculo", vehiculo.getImagen());
-        intent.putExtra("editMarcaVehiculo", vehiculo.getMarca());
-        intent.putExtra("editModeloVehiculo", vehiculo.getModelo());
-        intent.putExtra("editAnyoVehiculo", Integer.toString(vehiculo.getAnyo()));
-        intent.putExtra("editTraccionVehiculo", vehiculo.getTraccion());
-        intent.putExtra("editCombustibleVehiculo", vehiculo.getCombustible());
-        intent.putExtra("editFechaMatriculacionVehiculo", vehiculo.getFechamatriculacion());
-        intent.putExtra("editEdicionEspecialVehiculo", Integer.toString(vehiculo.getEdicionespecial()));
         startActivity(intent);
     }
 
@@ -121,8 +113,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
                 // Acción al pulsar el elemento
                 int position = recyclerView.getChildAdapterPosition(v);
                 Log.d(TAG, "Click en RV: " + position + " " + items.get(position).getId().toString());
-                Vehiculo vehiculo = presenter.getVehiculoFromID(Integer.toString(items.get(position).getId()));
-                presenter.onClickRecyclerView(items.get(position).getId(), vehiculo); // El ID y el vehículo en concreto
+                presenter.onClickRecyclerView(items.get(position).getId()); // El ID y el vehículo en concreto
             }
         });
 

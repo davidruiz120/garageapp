@@ -46,8 +46,8 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
-    public void onClickRecyclerView(int id, Vehiculo vehiculo) {
-        view.lanzarFormularioPorID(id, vehiculo);
+    public void onClickRecyclerView(int id) {
+        view.lanzarFormularioPorID(id);
     }
 
     @Override
