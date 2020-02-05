@@ -13,6 +13,7 @@ public interface ListadoInterface {
         void lanzarFormularioPorID(int id, Vehiculo vehiculo);
         void lanzarAcercaDe();
         void lanzarBuscar();
+        void cargarListado();
     }
 
     public interface Presenter {
@@ -20,7 +21,10 @@ public interface ListadoInterface {
         void onClickSobreGarageApp();
         void onClickBuscar();
         ArrayList<Vehiculo> getAllVehiculo();
+        ArrayList<Vehiculo> getAllVehiculoListadoView();
+        Vehiculo getVehiculoFromID(String id);
         void deleteVehiculo(Activity activity, Vehiculo vehiculo);
         void onClickRecyclerView(int id, Vehiculo vehiculo);
+        void cargarListado();
     }
 }

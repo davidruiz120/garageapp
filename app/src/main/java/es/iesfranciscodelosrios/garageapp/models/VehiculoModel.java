@@ -2,7 +2,9 @@ package es.iesfranciscodelosrios.garageapp.models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
@@ -15,8 +17,10 @@ import es.iesfranciscodelosrios.garageapp.views.MyApplication;
 
 public class VehiculoModel extends SQLiteOpenHelper {
 
+    String TAG = "GarageApp/VehiculoModel";
+
     // Database Info
-    private static final String DATABASE_NAME = "/sdcard/garageappDB.db";
+    private static final String DATABASE_NAME = "garageappDB.db";
     private static final int DATABASE_VERSION = 1;
 
     private static VehiculoModel sInstance;
@@ -43,6 +47,7 @@ public class VehiculoModel extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         String CREATE_TABLE_VEHICULO = "CREATE TABLE Vehiculo(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "imagen TEXT," +
@@ -55,7 +60,40 @@ public class VehiculoModel extends SQLiteOpenHelper {
                 "edicionespecial INTEGER" +
                 ")";
 
+
         db.execSQL(CREATE_TABLE_VEHICULO);
+    }
+
+
+    public void onInit(){
+
+        try{
+            SQLiteDatabase db = SQLiteDatabase.openDatabase(DATABASE_NAME, null,0);
+            Log.d(TAG,"La BD existe");
+            db.close();
+        } catch (SQLiteException e){
+            Log.d(TAG,"La BD no existe");
+
+            //SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DATABASE_NAME, null, null);
+            SQLiteDatabase db = getWritableDatabase();
+
+
+            String CREATE_TABLE_VEHICULO = "CREATE TABLE Vehiculo(" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "imagen TEXT," +
+                    "marca TEXT," +
+                    "modelo TEXT," +
+                    "anyo INTEGER," +
+                    "traccion TEXT," +
+                    "combustible TEXT," +
+                    "fechamatriculacion TEXT," +
+                    "edicionespecial INTEGER" +
+                    ")";
+
+            db.execSQL(CREATE_TABLE_VEHICULO);
+            Log.d(TAG, db.getPath());
+            Log.d(TAG,"La BD se ha creado");
+        }
     }
 
     @Override
@@ -92,8 +130,8 @@ public class VehiculoModel extends SQLiteOpenHelper {
     }
 
     public static void deleteVehiculo(Vehiculo vehiculo){
-        ArrayList<Vehiculo> list = getAllVehiculo();
-        list.remove(vehiculo);
+
+
     }
 
     public static List<String> getArrayCombustibles(){
@@ -107,8 +145,45 @@ public class VehiculoModel extends SQLiteOpenHelper {
         return arrayCombustibles;
     }
 
-    public static ArrayList<Vehiculo>getAllVehiculo(){
+    public ArrayList<Vehiculo>getAllVehiculo(){
+        SQLiteDatabase db = getReadableDatabase();
+
         ArrayList<Vehiculo> list = new ArrayList<Vehiculo>();
+
+        db.beginTransaction();
+        try {
+
+            String[] campos = new String[] {"*"};
+
+            Cursor c = db.query("Vehiculo", campos, null, null, null, null, null);
+
+            if (c.moveToFirst()) {
+                do {
+                    Vehiculo v = new Vehiculo();
+                    v.setId(c.getInt(0));
+                    v.setImagen(c.getString(1));
+                    v.setMarca(c.getString(2));
+                    v.setModelo(c.getString(3));
+                    v.setAnyo(c.getInt(4));
+                    v.setTraccion(c.getString(5));
+                    v.setCombustible(c.getString(6));
+                    v.setFechamatriculacion(c.getString(7));
+                    v.setEdicionespecial(c.getInt(8));
+                    list.add(v);
+                } while(c.moveToNext());
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return list;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return list;
+        }
+
+        /**ArrayList<Vehiculo> list = new ArrayList<Vehiculo>();
         Vehiculo v1 = new Vehiculo();
         v1.setId(0);
         v1.setMarca("Opel");
@@ -176,6 +251,78 @@ public class VehiculoModel extends SQLiteOpenHelper {
         list.add(v10);
 
 
-        return list;
+        return list;*/
+    }
+
+    public ArrayList<Vehiculo>getAllVehiculoListadoView(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        ArrayList<Vehiculo> list = new ArrayList<Vehiculo>();
+
+        db.beginTransaction();
+        try {
+
+            String[] campos = new String[] {"id", "imagen", "marca", "modelo"};
+
+            Cursor c = db.query("Vehiculo", campos, null, null, null, null, null);
+
+            if (c.moveToFirst()) {
+                do {
+                    Vehiculo v = new Vehiculo();
+                    v.setId(c.getInt(0));
+                    v.setImagen(c.getString(1));
+                    v.setMarca(c.getString(2));
+                    v.setModelo(c.getString(3));
+                    list.add(v);
+                } while(c.moveToNext());
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return list;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return list;
+        }
+    }
+
+    public Vehiculo getVehiculoFromID(String id){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Vehiculo v = new Vehiculo();
+
+        db.beginTransaction();
+        try {
+
+            String[] campos = new String[] {"*"};
+            String[] args = new String[] {id};
+
+            Cursor c = db.query("Vehiculo", campos, "id=?", args, null, null, null);
+
+            if (c.moveToFirst()) {
+                do {
+                    v.setId(c.getInt(0));
+                    v.setImagen(c.getString(1));
+                    v.setMarca(c.getString(2));
+                    v.setModelo(c.getString(3));
+                    v.setAnyo(c.getInt(4));
+                    v.setTraccion(c.getString(5));
+                    v.setCombustible(c.getString(6));
+                    v.setFechamatriculacion(c.getString(7));
+                    v.setEdicionespecial(c.getInt(8));
+                } while(c.moveToNext());
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return v;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return v;
+        }
     }
 }

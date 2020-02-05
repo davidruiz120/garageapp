@@ -25,6 +25,16 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
+    public ArrayList<Vehiculo> getAllVehiculoListadoView(){
+        return vehiculo.getAllVehiculoListadoView();
+    }
+
+    @Override
+    public Vehiculo getVehiculoFromID(String id){
+        return this.vehiculo.getVehiculoFromID(id);
+    }
+
+    @Override
     public void deleteVehiculo(Activity activity, Vehiculo vehiculo) {
         try {
             VehiculoModel.deleteVehiculo(vehiculo);
@@ -53,6 +63,11 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     @Override
     public void onClickBuscar() {
         view.lanzarBuscar();
+    }
+
+    @Override
+    public void cargarListado(){
+        view.cargarListado();
     }
 
 }

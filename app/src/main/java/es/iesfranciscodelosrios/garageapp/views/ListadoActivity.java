@@ -34,7 +34,9 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
 
     String TAG = "GarageApp/ListadoActivity";
     private ListadoInterface.Presenter presenter;
-    private ArrayList<Vehiculo> items ;
+    private ArrayList<Vehiculo> items;
+
+    TextView contadorTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,50 +57,15 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
             }
         });
 
-
-
-        // Inicializa el RecyclerView
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listadoRecyclerView);
-
-        // Crea el Adaptador con los datos de la lista anterior
-        items = presenter.getAllVehiculo();
-        VehiculoAdapter adaptador = new VehiculoAdapter(items);
-
-
-        // Asocia el Adaptador al RecyclerView
-        recyclerView.setAdapter(adaptador);
-
-        // Muestra el RecyclerView en vertical
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Asocia el elemento de la lista con una acción al ser pulsado
-        adaptador.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Acción al pulsar el elemento
-                int position = recyclerView.getChildAdapterPosition(v);
-                Log.d(TAG, "Click en RV: " + position + " " + items.get(position).getId().toString());
-                presenter.onClickRecyclerView(items.get(position).getId(), items.get(position)); // El ID y el vehículo en concreto
-            }
-        });
+        contadorTextView = findViewById(R.id.contadorTextView);
 
 
         /**
-         * Swipe del RecyclerView
+         * Carga el listado en el RecyclerView
          */
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+        presenter.cargarListado();
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Integer id = viewHolder.getAdapterPosition();
-                presenter.deleteVehiculo(ListadoActivity.this, items.get(id));
-            }
-        }).attachToRecyclerView(recyclerView);
+
 
     }
 
@@ -118,12 +85,63 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         intent.putExtra("editImagenVehiculo", vehiculo.getImagen());
         intent.putExtra("editMarcaVehiculo", vehiculo.getMarca());
         intent.putExtra("editModeloVehiculo", vehiculo.getModelo());
-        intent.putExtra("editAnyoVehiculo", vehiculo.getAnyo());
+        intent.putExtra("editAnyoVehiculo", Integer.toString(vehiculo.getAnyo()));
         intent.putExtra("editTraccionVehiculo", vehiculo.getTraccion());
         intent.putExtra("editCombustibleVehiculo", vehiculo.getCombustible());
         intent.putExtra("editFechaMatriculacionVehiculo", vehiculo.getFechamatriculacion());
-        intent.putExtra("editEdicionEspecialVehiculo", vehiculo.getEdicionespecial());
+        intent.putExtra("editEdicionEspecialVehiculo", Integer.toString(vehiculo.getEdicionespecial()));
         startActivity(intent);
+    }
+
+    @Override
+    public void cargarListado(){
+
+        items = new ArrayList<Vehiculo>();
+
+        // Inicializa el RecyclerView
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listadoRecyclerView);
+
+        // Crea el Adaptador con los datos de la lista anterior
+        items = presenter.getAllVehiculoListadoView();
+        VehiculoAdapter adaptador = new VehiculoAdapter(items);
+
+        // Se establece en pantalla, el número de elemenos de la lista
+        contadorTextView.setText(adaptador.getItemCount() + " resultados encontrados");
+
+        // Asocia el Adaptador al RecyclerView
+        recyclerView.setAdapter(adaptador);
+
+        // Muestra el RecyclerView en vertical
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Asocia el elemento de la lista con una acción al ser pulsado
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Acción al pulsar el elemento
+                int position = recyclerView.getChildAdapterPosition(v);
+                Log.d(TAG, "Click en RV: " + position + " " + items.get(position).getId().toString());
+                Vehiculo vehiculo = presenter.getVehiculoFromID(Integer.toString(items.get(position).getId()));
+                presenter.onClickRecyclerView(items.get(position).getId(), vehiculo); // El ID y el vehículo en concreto
+            }
+        });
+
+        /**
+         * Swipe del RecyclerView
+         */
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Integer id = viewHolder.getAdapterPosition();
+                presenter.deleteVehiculo(ListadoActivity.this, items.get(id));
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -187,7 +205,9 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     @Override
     protected void onResume(){
         super.onResume();
-        /**TODO: Actualizar en Listado */
+
+        presenter.cargarListado();
+
         Log.d(TAG,"Ejecutando onResume en ListadoActivity...");
     }
 

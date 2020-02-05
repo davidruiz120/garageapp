@@ -186,7 +186,8 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
 
 
         /**
-         *
+         * Si se ha pulsado en un registro en el listado, cargará los datos que se le ha
+         * pasado por el intent
          */
         this.onEditVehiculo();
 
@@ -324,6 +325,8 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
          */
         if(getIntent().getStringExtra("editIdVehiculo") == null){
             inputBtnBorrar.setVisibility(View.GONE);
+        } else {
+            setTitle("Editar vehículo");
         }
     }
 
@@ -475,8 +478,17 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         selectAddCombustible.setSelection(selectAddCombustileArray.indexOf(editCombustibleVehiculo));
         String editFechaMatriculacionVehiculo = getIntent().getStringExtra("editFechaMatriculacionVehiculo");
         inputAddFechaMatriculacion.setText(editFechaMatriculacionVehiculo);
-        //String editEdicionEspecialVehiculo = getIntent().getStringExtra("editEdicionEspecialVehiculo");
-        //inputAddEdicionEspecial.setChecked(editEdicionEspecialVehiculo);
+        String editEdicionEspecialVehiculo = getIntent().getStringExtra("editEdicionEspecialVehiculo");
+        try{
+            if(editEdicionEspecialVehiculo.equals("1")){
+                inputAddEdicionEspecial.setChecked(true);
+            } else {
+                inputAddEdicionEspecial.setChecked(false);
+            }
+        } catch (RuntimeException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
