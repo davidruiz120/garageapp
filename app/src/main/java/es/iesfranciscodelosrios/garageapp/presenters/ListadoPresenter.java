@@ -36,13 +36,7 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
 
     @Override
     public void deleteVehiculo(Activity activity, Vehiculo vehiculo) {
-        try {
-            VehiculoModel.deleteVehiculo(vehiculo);
-            Toast.makeText(activity, "Elemento eliminado", Toast.LENGTH_SHORT).show();
-        } catch (Exception e){
-            Toast.makeText(activity, "Error al eliminar", Toast.LENGTH_SHORT).show();
-        }
-
+        Toast.makeText(activity, "Para borrar el elemento, accede a él", Toast.LENGTH_SHORT).show();
     }
 
     @Override

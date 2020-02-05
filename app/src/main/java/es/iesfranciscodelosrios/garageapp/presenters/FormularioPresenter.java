@@ -69,8 +69,14 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
     }
 
     @Override
-    public void onClickBorrar() {
-        view.lanzarListado();
+    public void onClickBorrar(String id) {
+        Log.d(TAG,"Método onClickBorrar");
+        if(model.deleteVehiculo(id)){
+            view.showToast("Se ha eliminado el vehículo");
+            view.lanzarListado();
+        } else {
+            view.showError("No se ha podido eliminar el vehículo");
+        }
     }
 
     @Override

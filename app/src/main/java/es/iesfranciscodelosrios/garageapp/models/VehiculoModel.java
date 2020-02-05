@@ -160,8 +160,25 @@ public class VehiculoModel extends SQLiteOpenHelper {
 
     }
 
-    public static void deleteVehiculo(Vehiculo vehiculo){
+    public boolean deleteVehiculo(String id){
+        SQLiteDatabase db = getWritableDatabase();
 
+        db.beginTransaction();
+
+        try {
+
+            String[] args = new String[]{id};
+
+            db.execSQL("DELETE FROM Vehiculo WHERE id=?", args);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return false;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return true;
+        }
 
     }
 

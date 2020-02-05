@@ -285,7 +285,7 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
                     .setPositiveButton(getString(R.string.borrar), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogBox, int id) {
                         Log.d(TAG, "Click en borrar");
-                        presenter.onClickBorrar();
+                        presenter.onClickBorrar(getIntent().getStringExtra("editIdVehiculo"));
                         }
                     })
 

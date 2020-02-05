@@ -31,7 +31,7 @@ public interface FormularioInterface {
     public interface Presenter{
         void onClickGuardar(Vehiculo vehiculo);
         void onClickActualizar(Vehiculo vehiculo);
-        void onClickBorrar();
+        void onClickBorrar(String id);
         void onClickImage(Context myContext);
         void resultPermision(int result);
         void onActivityResultImagen(int requestCode, int resultCode, @Nullable Intent data, ImageView imageView, Activity activity, Context context);
