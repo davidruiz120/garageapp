@@ -1,6 +1,7 @@
 package es.iesfranciscodelosrios.garageapp.views;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,10 +24,12 @@ import android.widget.Spinner;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import es.iesfranciscodelosrios.garageapp.R;
 import es.iesfranciscodelosrios.garageapp.interfaces.BuscarInterface;
+import es.iesfranciscodelosrios.garageapp.models.Vehiculo;
 import es.iesfranciscodelosrios.garageapp.presenters.BuscarPresenter;
 
 public class BuscarActivity extends AppCompatActivity implements BuscarInterface.View{
@@ -101,10 +104,8 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
             }
         });
 
-        /**
-         * Método que se encarga de validar el formulario
-         */
-        validarFormulario();
+
+
 
 
         presenter = new BuscarPresenter(this);
@@ -114,7 +115,11 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Pulsando boton Buscar...");
-                presenter.onClickBuscar();
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setModelo(inputSearchModelo.getText().toString());
+                vehiculo.setCombustible(selectSearchCombustible.getSelectedItem().toString());
+                vehiculo.setFechamatriculacion(inputSearchFechaMatriculacion.getText().toString());
+                presenter.onClickBuscar(vehiculo);
             }
         });
     }
@@ -129,7 +134,7 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
         selectSearchCombustible = findViewById(R.id.inputSearchCombustible);
     }
 
-    @Override
+    /**@Override
     public void validarFormulario(){
         // Fecha de matriculación
         addTextChangedListener(inputSearchFechaMatriculacion, inputSearchFechaMatriculacionTIL);
@@ -179,11 +184,15 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
             return false;
         }
         return true;
-    }
+    }*/
 
     @Override
-    public void lanzarListado() {
+    public void lanzarListado(ArrayList<Vehiculo> vehiculos) {
         Log.d(TAG, "Lanzando listado...");
+        // https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("arrayVehiculosFiltro", vehiculos);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 

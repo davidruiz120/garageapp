@@ -35,6 +35,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     String TAG = "GarageApp/ListadoActivity";
     private ListadoInterface.Presenter presenter;
     private ArrayList<Vehiculo> items;
+    private ArrayList<Vehiculo> vehiculosFiltro;
 
     TextView contadorTextView;
 
@@ -63,7 +64,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         /**
          * Carga el listado en el RecyclerView
          */
-        presenter.cargarListado();
+        presenter.cargarListado(false);
 
 
 
@@ -86,7 +87,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     }
 
     @Override
-    public void cargarListado(){
+    public void cargarListado(boolean desdeBusqueda){
 
         items = new ArrayList<Vehiculo>();
 
@@ -94,7 +95,13 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listadoRecyclerView);
 
         // Crea el Adaptador con los datos de la lista anterior
-        items = presenter.getAllVehiculoListadoView();
+        if(desdeBusqueda){
+            items = vehiculosFiltro;
+        } else{
+            items = presenter.getAllVehiculoListadoView();
+
+        }
+        //items = presenter.getAllVehiculoListadoView();
         VehiculoAdapter adaptador = new VehiculoAdapter(items);
 
         // Se establece en pantalla, el número de elemenos de la lista
@@ -146,7 +153,8 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     public void lanzarBuscar() {
         Log.d(TAG, "Lanzando BuscarActivity...");
         Intent intent = new Intent(ListadoActivity.this, BuscarActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     @Override // Se añade el Toolbar personalizado
@@ -176,6 +184,17 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            vehiculosFiltro = (ArrayList<Vehiculo>) data.getSerializableExtra("arrayVehiculosFiltro");
+            //this.cargarListado(true);
+            Toast.makeText(ListadoActivity.this, "No se ha podido terminar de hacer la búsqueda por múltiples erroes", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onBackPressed(){
         super.onBackPressed();
         Log.d(TAG,"Ejecutando onBlackPressed en ListadoActivity...");
@@ -197,7 +216,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     protected void onResume(){
         super.onResume();
 
-        presenter.cargarListado();
+        presenter.cargarListado(false);
 
         Log.d(TAG,"Ejecutando onResume en ListadoActivity...");
     }

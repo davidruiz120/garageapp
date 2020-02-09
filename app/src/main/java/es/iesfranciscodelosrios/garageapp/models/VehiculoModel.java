@@ -373,4 +373,40 @@ public class VehiculoModel extends SQLiteOpenHelper {
             return v;
         }
     }
+
+    public ArrayList<Vehiculo>getAllVehiculoFiltradoListadoView(Vehiculo vehiculo){
+        SQLiteDatabase db = getReadableDatabase();
+
+        ArrayList<Vehiculo> list = new ArrayList<Vehiculo>();
+
+        db.beginTransaction();
+        try {
+
+            String[] campos = new String[] {"id", "imagen", "marca", "modelo"};
+            String selection = "modelo=?";
+            String[] args = new String[] {vehiculo.getModelo()};
+
+            Cursor c = db.query("Vehiculo", campos, selection, args, null, null, null);
+
+            if (c.moveToFirst()) {
+                do {
+                    Vehiculo v = new Vehiculo();
+                    v.setId(c.getInt(0));
+                    v.setImagen(c.getString(1));
+                    v.setMarca(c.getString(2));
+                    v.setModelo(c.getString(3));
+                    list.add(v);
+                } while(c.moveToNext());
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DB", "Error while trying to add post to database");
+            return list;
+        } finally {
+            db.endTransaction();
+            db.close();
+            return list;
+        }
+    }
 }

@@ -60,8 +60,8 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
-    public void cargarListado(){
-        view.cargarListado();
+    public void cargarListado(boolean desdeBusqueda){
+        view.cargarListado(desdeBusqueda);
     }
 
 }
