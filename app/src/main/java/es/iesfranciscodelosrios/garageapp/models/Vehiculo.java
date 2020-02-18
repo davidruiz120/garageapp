@@ -23,7 +23,7 @@ public class Vehiculo {
     }
 
     public boolean setMarca(String marca) {
-        if(marca.equals("")){
+        if(marca.equals("") && marca.length() >= 30){
             return false;
         } else{
             this.marca = marca;
@@ -32,7 +32,7 @@ public class Vehiculo {
     }
 
     public boolean setModelo(String modelo) {
-        if(modelo.equals("")){
+        if(modelo.equals("") && modelo.length() >= 30){
             return false;
         } else {
             this.modelo = modelo;
@@ -52,7 +52,7 @@ public class Vehiculo {
     }
 
     public boolean setTraccion(String traccion) {
-        if(traccion.equals("")){
+        if(traccion.equals("") && traccion.length() >= 30){
             return false;
         } else {
             this.traccion = traccion;
@@ -70,13 +70,20 @@ public class Vehiculo {
     }
 
     public boolean setFechamatriculacion(String fechamatriculacion) {
+        Calendar fechaActual;
+        fechaActual = Calendar.getInstance();
+
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
 
         try {
             format.parse(fechamatriculacion);
-            this.fechamatriculacion = fechamatriculacion;
-            return true;
+            if(format.getCalendar().get(Calendar.YEAR) > fechaActual.get(Calendar.YEAR) + 1){
+                return false;
+            } else {
+                this.fechamatriculacion = fechamatriculacion;
+                return true;
+            }
         } catch (ParseException e) {
             return false;
         }
