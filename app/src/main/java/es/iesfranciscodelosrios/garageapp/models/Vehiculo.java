@@ -23,7 +23,7 @@ public class Vehiculo {
     }
 
     public boolean setMarca(String marca) {
-        if(marca.equals("") && marca.length() >= 30){
+        if(marca.equals("") || marca.length() >= 30){
             return false;
         } else{
             this.marca = marca;
@@ -32,7 +32,7 @@ public class Vehiculo {
     }
 
     public boolean setModelo(String modelo) {
-        if(modelo.equals("") && modelo.length() >= 30){
+        if(modelo.equals("") || modelo.length() >= 30){
             return false;
         } else {
             this.modelo = modelo;
@@ -52,7 +52,7 @@ public class Vehiculo {
     }
 
     public boolean setTraccion(String traccion) {
-        if(traccion.equals("") && traccion.length() >= 30){
+        if(traccion.equals("") || traccion.length() >= 30){
             return false;
         } else {
             this.traccion = traccion;
