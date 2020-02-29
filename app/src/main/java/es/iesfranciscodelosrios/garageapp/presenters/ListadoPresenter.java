@@ -60,6 +60,11 @@ public class ListadoPresenter implements ListadoInterface.Presenter {
     }
 
     @Override
+    public void onClickAyuda() {
+        view.lanzarAyuda();
+    }
+
+    @Override
     public void cargarListado(boolean desdeBusqueda){
         view.cargarListado(desdeBusqueda);
     }

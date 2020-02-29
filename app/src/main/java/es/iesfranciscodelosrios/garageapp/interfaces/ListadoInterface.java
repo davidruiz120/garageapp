@@ -13,6 +13,7 @@ public interface ListadoInterface {
         void lanzarFormularioPorID(int id);
         void lanzarAcercaDe();
         void lanzarBuscar();
+        void lanzarAyuda();
         void cargarListado(boolean desdeBusqueda);
     }
 
@@ -20,6 +21,7 @@ public interface ListadoInterface {
         void onClickAdd();
         void onClickSobreGarageApp();
         void onClickBuscar();
+        void onClickAyuda();
         ArrayList<Vehiculo> getAllVehiculo();
         ArrayList<Vehiculo> getAllVehiculoListadoView();
         Vehiculo getVehiculoFromID(String id);

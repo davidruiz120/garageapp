@@ -19,6 +19,11 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_help"
+        android:orderInCategory="100"
+        android:title="@string/ayuda"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_acerca_de"
         android:orderInCategory="100"
         android:title="@string/acerca_de"

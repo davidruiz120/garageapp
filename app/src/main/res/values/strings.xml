@@ -28,4 +28,6 @@
     <string name="form_campo_oblig">Campo obligatorio o incorrecto</string>
     <string name="form_anyo_incorrecto">Año incorrecto</string>
     <string name="form_fecha_incorrecta">Formato fecha incorrecta</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="title_activity_ayuda">Ayuda</string>
 </resources>

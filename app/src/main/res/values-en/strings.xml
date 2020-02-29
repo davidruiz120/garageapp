@@ -25,4 +25,6 @@
     <string name="form_anyo_incorrecto">Incorrect year</string>
     <string name="form_campo_oblig">Required or incorrect field</string>
     <string name="form_fecha_incorrecta">Incorrect date format</string>
+    <string name="ayuda">Help</string>
+    <string name="title_activity_ayuda">Help</string>
 </resources>

@@ -157,6 +157,14 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
         startActivityForResult(intent, 0);
     }
 
+    @Override
+    public void lanzarAyuda() {
+        Log.d(TAG, "Lanzando AyudaActivity...");
+        Intent intent = new Intent(ListadoActivity.this, AyudaActivity.class);
+        intent.putExtra("pagina", "listado");
+        startActivity(intent);
+    }
+
     @Override // Se añade el Toolbar personalizado
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -175,6 +183,9 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
                 break;
             case R.id.action_settings:
                 Toast.makeText(ListadoActivity.this, "Sin funcionalidad por el momento", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_help:
+                presenter.onClickAyuda();
                 break;
             case R.id.action_acerca_de:
                 presenter.onClickSobreGarageApp();
