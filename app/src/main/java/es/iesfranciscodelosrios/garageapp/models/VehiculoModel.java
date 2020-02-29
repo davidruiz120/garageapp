@@ -409,4 +409,10 @@ public class VehiculoModel extends SQLiteOpenHelper {
             return list;
         }
     }
+
+
+    @Override
+    public String getDatabaseName() {
+        return DATABASE_NAME;
+    }
 }
