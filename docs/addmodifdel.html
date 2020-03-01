@@ -1,0 +1,74 @@
+<html>
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/73b5a2bda4.js" crossorigin="anonymous"></script>
+    
+    <title>GarageApp | Formulario</title>
+  </head>
+  
+  <body id="page-top">
+  
+    
+  
+
+    <section id="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>GarageApp | Formulario</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          
+          <p>En esta vista, se muestra un formulario que sirve tanto para insertar como modificar un vehículo.</p>
+          
+          <div class="text-center">
+            <img src="formulario0.jpg" alt="formulario0" width="175">
+          </div>
+          
+          <p>En él, hay múltiples campos, algunos obligatorios para rellenar con el objetivo de insertar o modificar:</p>
+          
+          <ul>
+            <li><b>Imagen (No obligatorio):</b> Por defecto, mostrará 'Sin imagen'. Para poder agregar una imagen, basta con darle al botón ubicado en la derecha, y aceptando los permisos (si lo desea) se mostrará su galería, y de ahí, podrá seleccionar una imagen.</li>
+            <li><b>Marca (Obligatorio):</b> En este campo se debe de introducir la marca del vehículo. No debe de estar vacío y no debe se sobrepasar los 30 carácteres.</li>
+            <li><b>Modelo (Obligatorio):</b> En este campo se debe de introducir el modelo del vehículo. No debe de estar vacío y no debe se sobrepasar los 30 carácteres.</li>
+            <li><b>Año: (Obligatorio):</b> En este campo se debe de introducir el año del vehículo. No debe de estar vacío y debe de cumplir que, el año esté en un rango en específico, entre 1903 y el año siguiente al actual. Ejemplo, si estamos en 2020, el año máximo permitido es 2021.</li>
+            <li><b>Tracción (Obligatorio):</b> En este campo se debe de introducir el tipo de tracción del vehículo. No debe de estar vacío y no debe se sobrepasar los 30 carácteres.</li>
+            <li><b>Combustible (Obligatorio):</b> En este campo se debe de seleccionar el tipo de combustible del vehículo. Por defecto, hay un tipo seleccionado, puedes elegir entre las diferentes opciones que hay disponibles. Si en el caso de que el tipo de combustible del vehículo que desea insertar no está entre las opciones, en la parte derecha del campo, hay un botón (+) que le brinda la posibilidad de agregar manualmente un tipo de combustible.</li>
+            <li><b>Fecha de matriculación (Obligatorio):</b> En este campo se debe de introducir la fecha de matriculación. Dicha fecha debe de cumplir un formato en concreto: <b>DD/MM/YYYY</b>. Si no desea escribir la fecha manualmente, existe un botón en el lado derecho que le mostrará un calendario para poder seleccionar la fecha más cómodamente.</li>                                                  
+            <li><b>Edición especial (No obligatorio):</b> Este campo brinda la opción de seleccionar si el vehículo a insertar es una edición especial o no.</li>
+          </ul>
+          
+          <div class="text-center">
+            <img src="formulario1.jpg" alt="formulario1" width="175">
+          </div>
+          
+          <p>Si algunos de los campos no cumple con las condiciones, el formulario se presentará de la siguiente manera:</p>
+          
+          <div class="text-center">
+            <img src="formulario2.jpg" alt="formulario2" width="175">
+          </div>
+          
+          <p>Cuando el formulario cumpla con las condiciones, se podrá insertar el vehículo al darle al botón de 'Guardar'. Si se ha insertado correctamente, se devolverá a la vista del listado y mostrará un mensaje de información.</p>
+          
+          <p>En el caso de que se esté <b>modificando</b> un vehículo, al darle dicho botón de 'Guardar', hará el mismo protocolo pero mostrando un mensaje diferente.</p>
+          
+          <p>Para poder <b>eliminar</b> el vehíclo, si estamos <b>modificando</b>, aparecerá un nuevo botón al lado de 'Guardar', llamado 'Borrar'. Al darle a dicho botón, mostrará un mensaje de confirmación para borrar o no el vehículo. Una vez se ha confirmado, se borrará el vehículo, se devolverá al listado y mostrará un mensaje de información.</p>
+          
+          
+        </div>
+      </div>
+    </div>
+  </section>
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
