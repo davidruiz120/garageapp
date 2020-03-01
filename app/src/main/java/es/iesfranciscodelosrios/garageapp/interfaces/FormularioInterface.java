@@ -26,6 +26,7 @@ public interface FormularioInterface {
         void showToast(String mensaje);
         void launchGallery();
         void onEditVehiculo();
+        void lanzarAyuda();
     }
 
     public interface Presenter{
@@ -39,5 +40,6 @@ public interface FormularioInterface {
         Vehiculo getVehiculoFromID(String id);
         Bitmap stringToBitmap(String imagen);
         String bitmapToBase64(Bitmap imagen);
+        void onClickAyuda();
     }
 }

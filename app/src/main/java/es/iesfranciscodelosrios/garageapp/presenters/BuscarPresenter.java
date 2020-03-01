@@ -21,4 +21,9 @@ public class BuscarPresenter implements BuscarInterface.Presenter {
     public void onClickBuscar(Vehiculo vehiculo) {
         view.lanzarListado(model.getAllVehiculoFiltradoListadoView(vehiculo));
     }
+
+    @Override
+    public void onClickAyuda() {
+        view.lanzarAyuda();
+    }
 }

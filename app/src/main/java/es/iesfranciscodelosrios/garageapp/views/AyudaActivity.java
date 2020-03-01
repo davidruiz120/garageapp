@@ -27,6 +27,9 @@ public class AyudaActivity extends AppCompatActivity implements AyudaInterface.V
     String TAG = "GarageApp/AyudaActivity";
     private AyudaInterface.Presenter presenter;
     private WebView mWebview ;
+    public static final String LISTADO = "listado";
+    public static final String FORMULARIO = "formulario";
+    public static final String BUSCAR = "buscar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,14 @@ public class AyudaActivity extends AppCompatActivity implements AyudaInterface.V
          * lanzar la web con un enlace en específico
          */
         switch (getIntent().getStringExtra("pagina")){
-            case "listado":
-                presenter.lanzarAyuda("listado");
+            case LISTADO:
+                presenter.lanzarAyuda(LISTADO);
                 break;
-            case "buscar":
-                presenter.lanzarAyuda("buscar");
+            case BUSCAR:
+                presenter.lanzarAyuda(BUSCAR);
                 break;
-            case "formulario":
-                presenter.lanzarAyuda("addmodifdel");
+            case FORMULARIO:
+                presenter.lanzarAyuda(FORMULARIO);
                 break;
         }
 

@@ -26,6 +26,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -335,6 +337,31 @@ public class FormularioActivity extends AppCompatActivity implements FormularioI
         } else {
             setTitle("Editar vehículo");
         }
+    }
+
+    @Override // Se añade el Toolbar personalizado
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_formulario, menu);
+        return true;
+    }
+
+    @Override // Funcionalidad de las opciones del toolbar
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        switch (menuItem.getItemId()){
+            case R.id.action_help:
+                presenter.onClickAyuda();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void lanzarAyuda(){
+        Log.d(TAG, "Lanzando AyudaActivity...");
+        Intent intent = new Intent(FormularioActivity.this, AyudaActivity.class);
+        intent.putExtra("pagina", AyudaActivity.FORMULARIO);
+        startActivity(intent);
     }
 
 

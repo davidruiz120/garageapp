@@ -10,10 +10,12 @@ public interface BuscarInterface {
         void lanzarListado(ArrayList<Vehiculo> vehiculos);
         void inicializarElementos();
         //void validarFormulario();
+        void lanzarAyuda();
     }
 
     public interface Presenter{
         void onClickBuscar(Vehiculo vehiculo);
+        void onClickAyuda();
     }
 
 }

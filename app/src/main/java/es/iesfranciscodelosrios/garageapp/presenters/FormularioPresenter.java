@@ -47,6 +47,11 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
     }
 
     @Override
+    public void onClickAyuda() {
+        view.lanzarAyuda();
+    }
+
+    @Override
     public void onClickGuardar(Vehiculo vehiculo) {
         Log.d(TAG,"Método onClickGuardar");
         if(model.addNew(vehiculo)){
@@ -141,6 +146,8 @@ public class FormularioPresenter implements FormularioInterface.Presenter {
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
     }
+
+
 
     @Override
     public List<String> getArrayCombustibles() {

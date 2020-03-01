@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -134,6 +137,23 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
         selectSearchCombustible = findViewById(R.id.inputSearchCombustible);
     }
 
+    @Override // Se añade el Toolbar personalizado
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buscar, menu);
+        return true;
+    }
+
+    @Override // Funcionalidad de las opciones del toolbar
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        switch (menuItem.getItemId()){
+            case R.id.action_help:
+                presenter.onClickAyuda();
+                break;
+        }
+        return true;
+    }
+
     /**@Override
     public void validarFormulario(){
         // Fecha de matriculación
@@ -185,6 +205,14 @@ public class BuscarActivity extends AppCompatActivity implements BuscarInterface
         }
         return true;
     }*/
+
+    @Override
+    public void lanzarAyuda(){
+        Log.d(TAG, "Lanzando AyudaActivity...");
+        Intent intent = new Intent(BuscarActivity.this, AyudaActivity.class);
+        intent.putExtra("pagina", AyudaActivity.BUSCAR);
+        startActivity(intent);
+    }
 
     @Override
     public void lanzarListado(ArrayList<Vehiculo> vehiculos) {

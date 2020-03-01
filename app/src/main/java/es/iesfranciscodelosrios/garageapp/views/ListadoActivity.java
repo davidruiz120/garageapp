@@ -161,7 +161,7 @@ public class ListadoActivity extends AppCompatActivity implements ListadoInterfa
     public void lanzarAyuda() {
         Log.d(TAG, "Lanzando AyudaActivity...");
         Intent intent = new Intent(ListadoActivity.this, AyudaActivity.class);
-        intent.putExtra("pagina", "listado");
+        intent.putExtra("pagina", AyudaActivity.LISTADO);
         startActivity(intent);
     }
 
