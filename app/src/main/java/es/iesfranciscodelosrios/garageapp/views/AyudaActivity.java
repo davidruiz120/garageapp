@@ -28,7 +28,7 @@ public class AyudaActivity extends AppCompatActivity implements AyudaInterface.V
     private AyudaInterface.Presenter presenter;
     private WebView mWebview ;
     public static final String LISTADO = "listado";
-    public static final String FORMULARIO = "formulario";
+    public static final String FORMULARIO = "addmodifdel";
     public static final String BUSCAR = "buscar";
 
     @Override
